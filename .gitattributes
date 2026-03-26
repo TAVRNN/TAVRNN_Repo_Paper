@@ -1,0 +1,4 @@
+*.npy filter=lfs diff=lfs merge=lfs -text
+*.npz filter=lfs diff=lfs merge=lfs -text
+sliding_firing_stats_w4min filter=lfs diff=lfs merge=lfs -text
+firing_stats.feather filter=lfs diff=lfs merge=lfs -text
