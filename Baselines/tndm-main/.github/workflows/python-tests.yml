@@ -1,0 +1,46 @@
+name: Python Tests
+
+on: [push, pull_request]
+
+jobs:
+  build-linux:
+    name: 'Run Tests'
+    runs-on: ubuntu-latest
+    env:
+      OS: ubuntu-latest
+      PYTHON: '3.8'
+      CPU_ONLY: 'TRUE'
+    steps:
+    - uses: actions/checkout@master
+    - name: Setup Python
+      uses: actions/setup-python@master
+      with:
+        python-version: 3.8
+        lfs: true
+    - name: Pull LFS objects
+      run: git lfs pull
+    - name: Install dependencies
+      run: |
+        python3 -m venv .venv
+        source .venv/bin/activate
+        pip3 install --upgrade -r ./requirements.txt
+        pip3 install --upgrade mypy pytest pytest-cov
+    - name: Lint with mypy
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        source .venv/bin/activate
+        python -m mypy --ignore-missing-imports --follow-imports=silent --show-column-numbers --module tndm
+    - name: Test with pytest
+      run: |
+        source .venv/bin/activate
+        pytest -v -m "not slow" --cov=tndm --cov-report=xml --cov-config=.coveragerc
+    - name: Upload coverage to Codecov
+      uses: codecov/codecov-action@v1
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        files: ./coverage.xml,./.coverage
+        directory: ./
+        env_vars: OS,PYTHON
+        name: codecov-umbrella
+        fail_ci_if_error: true
+        verbose: true
