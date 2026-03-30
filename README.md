@@ -1,8 +1,9 @@
-# Temporal Attention-enhanced Variational Graph Recurrent Neural Network
+# TAVRNN: Temporal Attention-enhanced Variational Graph RNN Captures Neural Dynamics and Behavior
 
 This repository contains the code associated with the paper:
 
-**"TAVRNN: Temporal Attention-enhanced Variational Graph RNN Captures Neural Dynamics and Behavior"**.
+**"Graph-Based Representation Learning of Neuronal Dynamics and
+Behavior"**.
 
 ## Abstract
 
